@@ -1,0 +1,29 @@
+<button id="rec" onclick="onBtnRecordClicked()">Record</button>
+<button id="stop"  onclick="onBtnStopClicked()" disabled>Stop</button>
+
+ <div id="videos-container"></div>
+
+<script>
+navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
+
+    document.getElementById('rec').onclick = function() {
+    var htmlElement = document.createElement('video');
+    htmlElement.setAttribute('autoplay', true);
+    htmlElement.setAttribute('controls', true);
+    videosContainer.insertBefore(htmlElement, videosContainer.firstChild);
+
+    var mediaConfig = {
+            video: htmlElement,
+            onsuccess: function(stream) {
+                src: URL.createObjectURL(stream);
+            },
+            onerror: function() {
+                alert('unable to get access to your webcam');
+            }
+        };
+        navigator.mediaDevices.getUserMedia(mediaConfig);
+    }
+
+var videosContainer = document.getElementById('videos-container') || document.body;
+
+</script>
